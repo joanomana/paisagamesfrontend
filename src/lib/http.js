@@ -1,8 +1,8 @@
-const DEFAULT_BASE_URL = 'http://localhost:4000';
+
 
 
 const RAW = process.env.NEXT_PUBLIC_API_URL;
-const BASE_URL = (RAW && RAW.trim()) ? RAW.replace(/\/+$/, '') : DEFAULT_BASE_URL;
+const BASE_URL = (RAW && RAW.trim()) ? RAW.replace(/\/+$/, '') : '';
 
 function isAbsolute(u) {
     return /^https?:\/\//i.test(u);
