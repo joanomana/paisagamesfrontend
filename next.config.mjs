@@ -1,4 +1,4 @@
-const BACKEND = process.env.BACKEND_ORIGIN || 'http://127.0.0.1:3000';
+const BACKEND = process.env.BACKEND_ORIGIN || 'http://localhost:4000';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
