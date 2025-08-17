@@ -79,9 +79,31 @@ export default function Ventas() {
     }, []);
 
     const totalCOP = useMemo(
-        () => ventas.reduce((acc, v) => acc + (v.total || 0), 0),
+        () => ventas
+            .filter((v) => v.estado === 'PAGADA')
+            .reduce((acc, v) => acc + (v.total || 0), 0),
         [ventas]
     );
+
+    const totalCOPPendientes = useMemo(
+        () => ventas
+            .filter((v) => v.estado === 'PENDIENTE')
+            .reduce((acc, v) => acc + (v.total || 0), 0),
+        [ventas]
+    );
+
+    const totalCanceladas = useMemo(
+        () => ventas.filter((v) => v.estado === 'CANCELADA').length,
+        [ventas]
+    );
+
+
+    const totalPendientes = useMemo(
+        () => ventas.filter((v) => v.estado === 'PENDIENTE').length,
+        [ventas]
+    );
+
+
 
     const abrirCambiarEstado = (venta) => {
         setEditing(venta);
@@ -105,12 +127,24 @@ export default function Ventas() {
         <div className="space-y-5 text-white">
         <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-            <h2 className="text-xl font-semibold tracking-tight">Ventas</h2>
-            <p className="text-sm text-white/60">Resumen de ventas recientes</p>
+                <h2 className="text-xl font-semibold tracking-tight">Ventas</h2>
+                <p className="text-sm text-white/60">Resumen de ventas recientes</p>
             </div>
             <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm">
-            Total vendido:{' '}
-            <span className="font-semibold text-white">{COP.format(totalCOP)}</span>
+                Total pagos:{' '}
+                <span className="font-semibold text-white">{COP.format(totalCOP)}</span>
+            </div>
+            <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm">
+                Total pendientes:{' '}
+                <span className="font-semibold text-white">{COP.format(totalCOPPendientes)}</span>
+            </div>
+            <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-2 text-sm">
+                Total de ventas pagadas: <span className="font-semibold text-white">{ventas.filter((v) => v.estado === 'PAGADA').length}</span>
+                <br />
+                Total de ventas pendientes: <span className="font-semibold text-white">{totalPendientes}</span>
+                <br />
+                Total de ventas canceladas:{' '}
+                <span className="font-semibold text-white">{totalCanceladas}</span>
             </div>
         </div>
 

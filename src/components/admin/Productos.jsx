@@ -3,6 +3,30 @@ import { useEffect, useState } from 'react';
 import { productosAPI } from '@/lib/api';
 import Swal from 'sweetalert2';
 
+export const TIPOS = ['JUEGO_FISICO','LLAVE_DIGITAL','CONSOLA','ACCESORIO','COLECCIONABLE'];
+
+export const PLATAFORMAS = ['XBOX','PLAYSTATION','NINTENDO','PC','STEAM','EPIC','VALORANT','MULTI'];
+
+const COP = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  });
+
+  export const CATEGORIAS = [
+  'Acción',
+  'Almacenamiento',
+  'Amiibo',
+  'Aventura',
+  'Carreras',
+  'Consola',
+  'Control',
+  'Figura',
+  'Moneda Virtual',
+  'Roguelike',
+];
+
+
 export default function Stock() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,11 +41,7 @@ export default function Stock() {
 
   const [stockTarget, setStockTarget] = useState(null);
   const [nextStock, setNextStock] = useState(0);
-  const COP = new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    maximumFractionDigits: 0,
-  });
+  
 
   useEffect(() => {
     productosAPI
@@ -211,7 +231,11 @@ export default function Stock() {
     <div className="space-y-5 text-white">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Stock</h2>
-        <span className="text-sm text-white/60">{productos.length} productos</span>
+        <span className="text-sm text-white/60">
+          {productos.length} productos ·{' '}
+          {productos.reduce((acc, p) => acc + Number(p.stock || 0), 0)} en
+          inventario
+        </span>
       </div>
 
 
@@ -310,29 +334,43 @@ export default function Stock() {
 
               <div>
                 <label className="block text-xs text-white/70">Tipo</label>
-                <input
+                <select
                   value={form.tipo}
                   onChange={(e) => setForm((f) => ({ ...f, tipo: e.target.value }))}
                   className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
-                />
+                >
+                  <option className='bg-black' value="">— Selecciona —</option>
+                  {TIPOS.map((t) => (
+                    <option className='bg-black' key={t} value={t}>{t}</option>
+                  ))}
+                </select>
               </div>
-
               <div>
                 <label className="block text-xs text-white/70">Plataforma</label>
-                <input
+                <select
                   value={form.plataforma}
                   onChange={(e) => setForm((f) => ({ ...f, plataforma: e.target.value }))}
                   className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
-                />
+                >
+                  <option className='bg-black' value="">— Selecciona —</option>
+                  {PLATAFORMAS.map((p) => (
+                    <option className='bg-black' key={p} value={p}>{p}</option>
+                  ))}
+                </select>
               </div>
-
               <div>
                 <label className="block text-xs text-white/70">Categoría</label>
-                <input
+                <select
                   value={form.categoria}
                   onChange={(e) => setForm((f) => ({ ...f, categoria: e.target.value }))}
                   className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
-                />
+                  required
+                >
+                  <option className='bg-black' value="">— Selecciona —</option>
+                  {CATEGORIAS.map((c) => (
+                    <option className='bg-black' key={c} value={c}>{c}</option>
+                  ))}
+                </select>
               </div>
 
               <div>
