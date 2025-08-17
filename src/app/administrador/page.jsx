@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Context from '@/components/admin/Context';
 import Ventas from '@/components/admin/Ventas';
-import Stock from '@/components/admin/Stock';
+import Stock from '@/components/admin/Productos';
 import Producto from '@/components/admin/Producto';
 
 export default function Admin() {
@@ -31,7 +31,7 @@ export default function Admin() {
           <aside className="h-max rounded-2xl bg-white/10 p-2 backdrop-blur border border-white/10">
             <SideItem active={tab==='inicio'}  onClick={()=>setTab('inicio')}  title="Inicio"          subtitle="Resumen y ayuda" />
             <SideItem active={tab==='ventas'}  onClick={()=>setTab('ventas')}  title="Ventas"          subtitle="Ver y gestionar ventas" />
-            <SideItem active={tab==='stock'}   onClick={()=>setTab('stock')}   title="Stock"           subtitle="Existencias y categorías" />
+            <SideItem active={tab==='productos'}   onClick={()=>setTab('productos')}   title="Productos"           subtitle="Stock y edicion de productos" />
             <SideItem active={tab==='crear'}   onClick={()=>setTab('crear')}   title="Crear producto"  subtitle="Nuevo registro" />
           </aside>
 
@@ -39,7 +39,7 @@ export default function Admin() {
           <section className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-6 backdrop-blur">
             {tab === 'inicio'  && <Context />}
             {tab === 'ventas'  && <Ventas />}
-            {tab === 'stock'   && <Stock />}
+            {tab === 'productos'   && <Stock />}
             {tab === 'crear'   && <Producto />}
           </section>
         </div>
