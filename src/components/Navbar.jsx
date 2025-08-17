@@ -56,7 +56,7 @@ export default function Navbar({ cartCount = 0 }) {
                             <div className="flex flex-col gap-2">
                                 <LinkItem href="/producto" onClick={() => setOpen(false)}>Productos</LinkItem>
                                 <LinkItem href="/soporte" onClick={() => setOpen(false)}>Soporte</LinkItem>
-                                <LinkItem href="/admiistrador" onClick={() => setOpen(false)}>Administrador</LinkItem>
+                                <LinkItem href="/administrador" onClick={() => setOpen(false)}>Administrador</LinkItem>
 
                                 <Link
                                     href="/carrito"
