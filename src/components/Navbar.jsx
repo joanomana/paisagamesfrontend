@@ -33,7 +33,7 @@ export default function Navbar({ cartCount = 0 }) {
                         <div className="hidden md:flex items-center gap-6 text-sm">
                             <NavLink href="/producto">Productos</NavLink>
                             <NavLink href="/soporte">Soporte</NavLink>
-                            <NavLink href="/admin">Administrador</NavLink>
+                            <NavLink href="/administrador">Administrador</NavLink>
                         </div>
 
 
@@ -56,9 +56,8 @@ export default function Navbar({ cartCount = 0 }) {
                             <div className="flex flex-col gap-2">
                                 <LinkItem href="/producto" onClick={() => setOpen(false)}>Productos</LinkItem>
                                 <LinkItem href="/soporte" onClick={() => setOpen(false)}>Soporte</LinkItem>
-                                <LinkItem href="/admin" onClick={() => setOpen(false)}>Administrador</LinkItem>
+                                <LinkItem href="/admiistrador" onClick={() => setOpen(false)}>Administrador</LinkItem>
 
-                                {/* Carrito */}
                                 <Link
                                     href="/carrito"
                                     onClick={() => setOpen(false)}
