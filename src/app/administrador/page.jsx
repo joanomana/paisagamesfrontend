@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Context from '@/components/admin/Context';
 import Ventas from '@/components/admin/Ventas';
 import Stock from '@/components/admin/Productos';
-import Producto from '@/components/admin/Producto';
+import Producto from '@/components/admin/CrearProducto';
 
 export default function Admin() {
   const [tab, setTab] = useState('inicio'); 
