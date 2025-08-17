@@ -17,16 +17,16 @@ export default function ProductoCrear() {
     categoria: '',
     precio: 0,
     stock: 0,
-    // imágenes como entradas separadas en el form
+
     portada: '',
     imagen1: '',
     imagen2: '',
-    // metadata opcional
+
     mdEdicion: '',
     mdRegion: '',
   });
 
-  // categorías dinámicas (desde productos existentes) + modo "nueva categoría"
+
   const [categorias, setCategorias] = useState([]);
   const [catLoading, setCatLoading] = useState(true);
   const [newCatMode, setNewCatMode] = useState(false);
@@ -69,7 +69,7 @@ export default function ProductoCrear() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones mínimas
+
     if (!form.nombre.trim()) {
       return Swal.fire({ icon: 'warning', title: 'Falta el nombre' });
     }
@@ -90,7 +90,7 @@ export default function ProductoCrear() {
       }
     }
 
-    // Imágenes: tu schema requiere 3 (min) — portada, imagen1, imagen2
+
     const imagenes = [form.portada, form.imagen1, form.imagen2]
       .map((s) => (s || '').trim());
 
@@ -121,11 +121,11 @@ export default function ProductoCrear() {
 
     setBusy(true);
 
-    // Normaliza categoría (permite nuevas)
+
     const categoria = (form.categoria || '').trim();
 
-    // Payload para tu schema:
-    //  - NO incluimos "portada" porque es virtual (imagenes[0])
+
+
     const payload = {
       nombre: form.nombre.trim(),
       descripcion: form.descripcion || '',
@@ -134,7 +134,7 @@ export default function ProductoCrear() {
       categoria,
       precio: Number(form.precio || 0),
       stock: Number(form.stock || 0),
-      imagenes, // 👈 array de 3 strings
+      imagenes, 
       metadata: {
         edicion: (form.mdEdicion || '').trim(),
         region: (form.mdRegion || '').trim(),
@@ -147,7 +147,7 @@ export default function ProductoCrear() {
     try {
       const created = await productosAPI.create(payload);
 
-      // si se creó una categoría nueva, añádela al selector
+
       if (categoria && !categorias.includes(categoria)) {
         setCategorias((prev) => [...prev, categoria].sort((a, b) => a.localeCompare(b, 'es')));
       }
@@ -181,7 +181,7 @@ export default function ProductoCrear() {
         onSubmit={onSubmit}
         className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 rounded-2xl border border-white/10 bg-white/5 p-4"
       >
-        {/* Nombre */}
+
         <div className="sm:col-span-2">
           <label className="block text-xs text-white/70">Nombre</label>
           <input
@@ -193,7 +193,7 @@ export default function ProductoCrear() {
           />
         </div>
 
-        {/* Descripción */}
+
         <div className="sm:col-span-2">
           <label className="block text-xs text-white/70">Descripción</label>
           <textarea
@@ -205,7 +205,7 @@ export default function ProductoCrear() {
           />
         </div>
 
-        {/* Tipo */}
+
         <div>
           <label className="block text-xs text-white/70">Tipo</label>
           <select
@@ -214,14 +214,13 @@ export default function ProductoCrear() {
             className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
             required
           >
-            <option value="">— Selecciona —</option>
+            <option className='bg-black' value="">— Selecciona —</option>
             {TIPOS.map((t) => (
-              <option key={t} value={t}>{t}</option>
+              <option className='bg-black' key={t} value={t}>{t}</option>
             ))}
           </select>
         </div>
 
-        {/* Plataforma */}
         <div>
           <label className="block text-xs text-white/70">Plataforma</label>
           <select
@@ -230,14 +229,14 @@ export default function ProductoCrear() {
             className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
             required
           >
-            <option value="">— Selecciona —</option>
+            <option className='bg-black' value="">— Selecciona —</option>
             {PLATAFORMAS.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option className='bg-black' key={p} value={p}>{p}</option>
             ))}
           </select>
         </div>
 
-        {/* Categoría con lista + nueva */}
+
         <div className={newCatMode ? 'sm:col-span-2' : ''}>
           <label className="block text-xs text-white/70">Categoría</label>
 
@@ -261,9 +260,9 @@ export default function ProductoCrear() {
               {catLoading ? 'Cargando categorías…' : '— Selecciona —'}
             </option>
             {categorias.map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option className='bg-black' key={c} value={c}>{c}</option>
             ))}
-            <option value="__new__">➕ Nueva categoría…</option>
+            <option className='bg-black' value="__new__">➕ Nueva categoría…</option>
           </select>
 
           {newCatMode && (
@@ -283,7 +282,7 @@ export default function ProductoCrear() {
           )}
         </div>
 
-        {/* Precio */}
+
         <div>
           <label className="block text-xs text-white/70">Precio (COP)</label>
           <input
@@ -295,7 +294,7 @@ export default function ProductoCrear() {
           />
         </div>
 
-        {/* Stock */}
+
         <div>
           <label className="block text-xs text-white/70">Stock</label>
           <input
@@ -307,7 +306,7 @@ export default function ProductoCrear() {
           />
         </div>
 
-        {/* Portada */}
+
         <div className="sm:col-span-2">
           <label className="block text-xs text-white/70">Portada (URL)</label>
           <input
@@ -325,7 +324,7 @@ export default function ProductoCrear() {
           </div>
         </div>
 
-        {/* Imagen 2 / 3 */}
+
         <div>
           <label className="block text-xs text-white/70">Imagen 2 (URL)</label>
           <input
@@ -347,7 +346,7 @@ export default function ProductoCrear() {
           />
         </div>
 
-        {/* Metadata */}
+
         <div>
           <label className="block text-xs text-white/70">Edición (metadata)</label>
           <input
@@ -367,7 +366,7 @@ export default function ProductoCrear() {
           />
         </div>
 
-        {/* Acciones */}
+
         <div className="sm:col-span-2 mt-2 flex justify-end gap-2">
           <button
             type="reset"
