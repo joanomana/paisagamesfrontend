@@ -110,6 +110,67 @@ export default function Stock() {
     }
   };
 
+  const deleteProduct = async (producto) => {
+    const stock = Number(producto.stock || 0);
+    
+    // Validar que el stock esté en 0
+    if (stock > 0) {
+      await Swal.fire({
+        title: 'No se puede eliminar',
+        text: `El producto "${producto.nombre}" tiene ${stock} unidades en stock. Debe tener stock en 0 para poder eliminarlo.`,
+        icon: 'warning',
+        confirmButtonText: 'Entendido'
+      });
+      return;
+    }
+
+    // Pedir confirmación
+    const { isConfirmed } = await Swal.fire({
+      title: '¿Eliminar producto?',
+      text: `Esta acción eliminará permanentemente "${producto.nombre}"`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc2626',
+    });
+
+    if (!isConfirmed) return;
+
+    setBusyId(producto._id);
+    setErr(null);
+
+    try {
+      await productosAPI.remove(producto._id);
+      
+      // Remover el producto de la lista local
+      setProductos((cur) => cur.filter((p) => p._id !== producto._id));
+      
+      await Swal.fire({
+        title: 'Producto eliminado',
+        text: `"${producto.nombre}" ha sido eliminado correctamente`,
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (e) {
+      const msg =
+        e?.message ||
+        e?.response?.data?.error ||
+        'No se pudo eliminar el producto';
+      
+      await Swal.fire({
+        title: 'Error al eliminar',
+        text: msg,
+        icon: 'error',
+      });
+      setErr(msg);
+      console.error('productosAPI.remove error:', e);
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   if (loading) return <div className="p-6 text-white/80">Cargando…</div>;
   if (err) return <div className="p-6 text-red-400">Error: {String(err)}</div>;
 
@@ -156,22 +217,37 @@ export default function Stock() {
                 <span className="font-semibold">{COP.format(p.precio) || 0}</span>
               </div>
 
-              <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="mt-2 grid grid-cols-1 gap-2">
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    disabled={isBusy}
+                    onClick={() => router.push('/administrador/editar/' + p._id)}
+                    className="rounded-lg border border-white/20 px-2 py-1.5 text-sm hover:bg-white/10 disabled:opacity-50"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    disabled={isBusy}
+                    onClick={() => openStock(p)}
+                    className="rounded-lg border border-white/20 px-2 py-1.5 text-sm hover:bg-white/10 disabled:opacity-50"
+                  >
+                    Stock
+                  </button>
+                </div>
                 <button
                   type="button"
                   disabled={isBusy}
-                  onClick={() => router.push('/administrador/editar/' + p._id)}
-                  className="rounded-lg border border-white/20 px-2 py-1.5 text-sm hover:bg-white/10 disabled:opacity-50"
+                  onClick={() => deleteProduct(p)}
+                  className={`rounded-lg border px-2 py-1.5 text-sm transition disabled:opacity-50 ${
+                    Number(p.stock || 0) > 0 
+                      ? 'border-white/20 text-white/40 cursor-not-allowed' 
+                      : 'border-red-500/50 text-red-400 hover:bg-red-500/10 hover:border-red-500'
+                  }`}
+                  title={Number(p.stock || 0) > 0 ? 'Debe tener stock en 0 para eliminar' : 'Eliminar producto'}
                 >
-                  Editar
-                </button>
-                <button
-                  type="button"
-                  disabled={isBusy}
-                  onClick={() => openStock(p)}
-                  className="rounded-lg border border-white/20 px-2 py-1.5 text-sm hover:bg-white/10 disabled:opacity-50"
-                >
-                  Stock
+                  Eliminar
                 </button>
               </div>
               {stockOpen && stockTarget?._id === p._id &&(
