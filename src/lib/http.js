@@ -1,5 +1,5 @@
-const RAW_PUBLIC = process.env.NEXT_PUBLIC_API_URL;   
-const RAW_SERVER = process.env.BACKEND_ORIGIN;        
+const RAW_PUBLIC = process.env.NEXT_PUBLIC_API_URL;
+const RAW_SERVER = process.env.BACKEND_ORIGIN;
 
 const IS_SERVER = typeof window === 'undefined';
 const norm = (s) => (s && s.trim() ? s.replace(/\/+$/, '') : s);
@@ -26,15 +26,15 @@ function buildURL(path, query) {
     if (query && typeof query === 'object' && Object.keys(query).length > 0) {
         const qs = new URLSearchParams();
         for (const [k, v] of Object.entries(query)) {
-        if (v === undefined || v === null || v === '') continue;
-        Array.isArray(v) ? v.forEach(val => qs.append(k, String(val))) : qs.append(k, String(v));
+            if (v === undefined || v === null || v === '') continue;
+            Array.isArray(v) ? v.forEach(val => qs.append(k, String(val))) : qs.append(k, String(v));
         }
         url += (url.includes('?') ? '&' : '?') + qs.toString();
     }
     return url;
 }
 
-export async function request(path,{ method = 'GET', body, headers, timeout = 15000, query, credentials } = {}) {
+export async function request(path, { method = 'GET', body, headers, timeout = 15000, query, credentials } = {}) {
 
     const url = buildURL(path, query);
     const controller = new AbortController();
@@ -49,12 +49,12 @@ export async function request(path,{ method = 'GET', body, headers, timeout = 15
     let res;
     try {
         res = await fetch(url, {
-        method,
-        headers: computedHeaders,
-        body: body ? JSON.stringify(body) : undefined,
-        signal: controller.signal,
-        cache: 'no-store',
-        credentials,
+            method,
+            headers: computedHeaders,
+            body: body ? JSON.stringify(body) : undefined,
+            signal: controller.signal,
+            cache: 'no-store',
+            credentials,
         });
     } catch (err) {
         clearTimeout(id);

@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { productosAPI } from '@/lib/api';
 
-const TIPOS = ['JUEGO_FISICO','LLAVE_DIGITAL','CONSOLA','ACCESORIO','COLECCIONABLE'];
-const PLATAFORMAS = ['XBOX','PLAYSTATION','NINTENDO','PC','STEAM','EPIC','VALORANT','MULTI'];
+const TIPOS = ['JUEGO_FISICO', 'LLAVE_DIGITAL', 'CONSOLA', 'ACCESORIO', 'COLECCIONABLE'];
+const PLATAFORMAS = ['XBOX', 'PLAYSTATION', 'NINTENDO', 'PC', 'STEAM', 'EPIC', 'VALORANT', 'MULTI'];
 
 export default function ProductoCrear() {
   const [busy, setBusy] = useState(false);
@@ -134,7 +134,7 @@ export default function ProductoCrear() {
       categoria,
       precio: Number(form.precio || 0),
       stock: Number(form.stock || 0),
-      imagenes, 
+      imagenes,
       metadata: {
         edicion: (form.mdEdicion || '').trim(),
         region: (form.mdRegion || '').trim(),

@@ -3,17 +3,17 @@ import { useEffect, useState } from 'react';
 import { productosAPI } from '@/lib/api';
 import Swal from 'sweetalert2';
 
-export const TIPOS = ['JUEGO_FISICO','LLAVE_DIGITAL','CONSOLA','ACCESORIO','COLECCIONABLE'];
+export const TIPOS = ['JUEGO_FISICO', 'LLAVE_DIGITAL', 'CONSOLA', 'ACCESORIO', 'COLECCIONABLE'];
 
-export const PLATAFORMAS = ['XBOX','PLAYSTATION','NINTENDO','PC','STEAM','EPIC','VALORANT','MULTI'];
+export const PLATAFORMAS = ['XBOX', 'PLAYSTATION', 'NINTENDO', 'PC', 'STEAM', 'EPIC', 'VALORANT', 'MULTI'];
 
 const COP = new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    maximumFractionDigits: 0,
-  });
+  style: 'currency',
+  currency: 'COP',
+  maximumFractionDigits: 0,
+});
 
-  export const CATEGORIAS = [
+export const CATEGORIAS = [
   'Acción',
   'Almacenamiento',
   'Amiibo',
@@ -41,7 +41,7 @@ export default function Stock() {
 
   const [stockTarget, setStockTarget] = useState(null);
   const [nextStock, setNextStock] = useState(0);
-  
+
 
   useEffect(() => {
     productosAPI
