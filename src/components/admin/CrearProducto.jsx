@@ -256,7 +256,7 @@ export default function ProductoCrear() {
             disabled={catLoading}
             required={!newCatMode}
           >
-            <option value="">
+            <option className='bg-black' value="">
               {catLoading ? 'Cargando categorías…' : '— Selecciona —'}
             </option>
             {categorias.map((c) => (

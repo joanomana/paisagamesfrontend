@@ -129,9 +129,9 @@ export default function EditarProducto() {
                             onChange={(e) => setForm((f) => ({ ...f, tipo: e.target.value }))}
                             className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
                         >
-                            <option value="">-- Seleccionar --</option>
+                            <option className="bg-black" value="">-- Seleccionar --</option>
                             {TIPOS.map((t) => (
-                                <option key={t} value={t}>{t}</option>
+                                <option className="bg-black" key={t} value={t}>{t}</option>
                             ))}
                         </select>
                     </div>
@@ -143,9 +143,9 @@ export default function EditarProducto() {
                             onChange={(e) => setForm((f) => ({ ...f, plataforma: e.target.value }))}
                             className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
                         >
-                            <option value="">-- Seleccionar --</option>
+                            <option className="bg-black" value="">-- Seleccionar --</option>
                             {PLATAFORMAS.map((p) => (
-                                <option key={p} value={p}>{p}</option>
+                                <option className="bg-black" key={p} value={p}>{p}</option>
                             ))}
                         </select>
                     </div>
@@ -157,9 +157,9 @@ export default function EditarProducto() {
                             onChange={(e) => setForm((f) => ({ ...f, categoria: e.target.value }))}
                             className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 p-2 text-sm focus:outline-none"
                         >
-                            <option value="">-- Seleccionar --</option>
+                            <option className="bg-black" value="">-- Seleccionar --</option>
                             {CATEGORIAS.map((c) => (
-                                <option key={c} value={c}>{c}</option>
+                                <option className="bg-black" key={c} value={c}>{c}</option>
                             ))}
                         </select>
                     </div>
